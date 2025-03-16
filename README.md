@@ -31,10 +31,11 @@ What are the IP addresses used for C2 servers for this infection?
 3. From your VM, run the following command on the terminal: wget http://192.168.56.1:8080/yourfile.txt
 
 # Step 3: Setup your Wireshark display
-1. Remove the packet No column, and change the time display format column to represent the date and time of day
+1. Remove the packet No column, and change the time display format column to represent the date and time of day<br/>
 
 
 
+![Step 3 malware analysis - Made with Clipchamp](https://github.com/user-attachments/assets/be99ad10-c1dc-469e-9139-1e499049d485)
 
 
 sources:
