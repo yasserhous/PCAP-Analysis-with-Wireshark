@@ -33,6 +33,7 @@ What are the IP addresses used for C2 servers for this infection?
 # Step 3: Setup your Wireshark display
 1. Remove the packet No column, and change the time display format column to represent the date and time of day
 
+![Step 3 malware analysis - Made with Clipchamp](https://github.com/user-attachments/assets/d5da7699-4f6c-449c-8085-030d111dc0f4)
 
 
 sources:
