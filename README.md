@@ -34,8 +34,9 @@ What are the IP addresses used for C2 servers for this infection?
 1. Remove the packet No column, and change the time display format column to represent the date and time of day<br/>
 
 
+![Step 3 malware analysis - Made with Clipchamp](https://github.com/user-attachments/assets/25373b99-159c-47c8-b970-b024d9b04b2e)
 
-![Step 3 malware analysis - Made with Clipchamp](https://github.com/user-attachments/assets/be99ad10-c1dc-469e-9139-1e499049d485)
+
 
 
 sources:
