@@ -1,37 +1,52 @@
-# Wireshark_Tutorial
-For this lab, The focus will be on understanding the indicators of infection of windows client through pcap analysis using wireshark. We will be following the malware traffic analysis exercise from malware-traffic-analysis.net , and answering the questions. the exercise will be solving is the following: https://malware-traffic-analysis.net/2025/01/22/index.html.
+# **Wireshark Malware Traffic Analysis Lab**
 
-#Background povided:
-You work as an analyst at a Security Operation Center (SOC). Someone contacts your team to report a coworker has downloaded a suspicious file after searching for Google Authenticator. The caller provides some information similar to social media posts at:
+## **Overview**
+This lab focuses on analyzing network traffic to identify indicators of infection on a Windows client using **Wireshark**. The analysis is based on a **packet capture (PCAP) file** provided by [Malware Traffic Analysis](https://malware-traffic-analysis.net). The exercise follows a real-world malware investigation scenario, where we will examine network traffic, extract relevant artifacts, and answer key incident response questions.
 
-https://www.linkedin.com/posts/unit42_2025-01-22-wednesday-a-malicious-ad-led-activity-7288213662329192450-ky3V/
-https://x.com/Unit42_Intel/status/1882448037030584611
-Based on the caller's initial information, you confirm there was an infection.  You retrieve a packet capture (pcap) of the associated traffic.  Reviewing the traffic, you find several indicators matching details from a Github page referenced in the above social media posts.  After confirming an infection happened, you begin writing an incident report.
+The specific exercise being analyzed can be found here:  
+[Malware Traffic Analysis Exercise - January 22, 2025](https://malware-traffic-analysis.net/2025/01/22/index.html).
 
+## **Scenario**
+As a **Security Operations Center (SOC) analyst**, you receive a report from a user who claims that a coworker has downloaded a suspicious file after searching for **Google Authenticator**. The caller provides supporting details that align with reports shared on social media:
 
-#Tasks
+- **LinkedIn:** [Post by Unit42](https://www.linkedin.com/posts/unit42_2025-01-22-wednesday-a-malicious-ad-led-activity-7288213662329192450-ky3V/)
+- **Twitter (X):** [Unit42 Intel Tweet](https://x.com/Unit42_Intel/status/1882448037030584611)
 
-For this exercise, answer the following questions for your incident report:
+Upon initial investigation, you confirm that an infection has occurred. You retrieve a **PCAP file** containing network traffic associated with the incident. During analysis, several indicators align with details referenced in the GitHub page linked within the social media posts. Following confirmation of the infection, an **incident report** is prepared.
 
-What is the IP address of the infected Windows client?
-What is the mac address of the infected Windows client?
-What is the host name of the infected Windows client?
-What is the user account name from the infected Windows client?
-What is the likely domain name for the fake Google Authenticator page?
-What are the IP addresses used for C2 servers for this infection?
+## **Incident Response Tasks**
+The goal of this exercise is to answer the following questions based on **PCAP analysis**:
 
-# Step 1: Download the post infection pcap file provided by the exercise
-## Step 1.1: For the filw password, you can review the following page: https://malware-traffic-analysis.net/about.html
+1. **What is the IP address of the infected Windows client?**  
+2. **What is the MAC address of the infected Windows client?**  
+3. **What is the hostname of the infected Windows client?**  
+4. **What is the user account name on the infected Windows client?**  
+5. **What is the likely domain name associated with the fake Google Authenticator page?**  
+6. **What are the command-and-control (C2) server IP addresses used in this infection?**
 
+## **Lab Setup and Steps**
+### **Step 1: Download the PCAP File**
+- Obtain the **post-infection PCAP file** from the exercise page.
+- The **password** for the file can be found in the following reference:  
+  [Malware Traffic Analysis - About Page](https://malware-traffic-analysis.net/about.html)
 
-# Step 2: setup file sharing between the host machine and the virtual machine
-## Step 2.2: spinning up a quick python server on the host machine
-1. open command prompt from the location of the file you want to share with VM
-2. 2.run the following python command: python -m http.server 8080
-3. From your VM, run the following command on the terminal: wget http://192.168.56.1:8080/yourfile.txt
+### **Step 2: Transfer the PCAP File to a Virtual Machine**
+To analyze the file securely, it is recommended to transfer it to a **virtual machine** (VM). If you need to share files between the host machine and the VM, follow these steps:
 
-# Step 3: Setup your Wireshark display
-1. Remove the packet No column, and change the time display format column to represent the date and time of day<br/>
+#### **Method: Python HTTP Server**
+1. Open a command prompt in the directory containing the PCAP file.
+2. Run the following command to start a simple HTTP server:
+   ```bash
+   python -m http.server 8080
+   ```
+3. Open a terminal in your VM
+4. Run the following command to download the shared file to your VM
+   ```bash
+   wget http://192.168.56.1:8080/yourfilename
+   ```
+### **Step 3: Configure Wireshark for Analysis**
+1. Remove unnecessary columns (e.g., Packet Number) for a clearer display.
+2. Change the time format to display the full date and time for easier event correlation.
 
 
 ![Untitled design (2)](https://github.com/user-attachments/assets/a5e07850-b490-4572-9c72-e210432948b9)
