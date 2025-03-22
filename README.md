@@ -51,9 +51,18 @@ To analyze the file securely, it is recommended to transfer it to a **virtual ma
 
 ![Untitled design (2)](https://github.com/user-attachments/assets/a5e07850-b490-4572-9c72-e210432948b9)
 
+### Initial Investigation
+1) used view object content on wireshark to view the files that are part of the pcap file
+2) save the file
+3) view object properties to get the hash of the file
+4) search the has on virus total to determine whether its an infected file
 
-
-
+### Q1)  **What is the IP address of the infected Windows client?**  
+I found the host ip(victim ip) by taking the ip address under the source column for the http requests. Answer: 10.1.17.215
+### Q2) **What is the MAC address of the infected Windows client?**  
+I found the MAC address by going into the packet details of one of the http request packet, exploding the Ethernet section, and finding the HEX value of the source. Answer: 00:d0:b7:26:4a:74
+### Q3) **What is the hostname of the infected Windows client?**  
+I found the hostname by first filtering to only dhcp requests, then exploding option 12 of the packet details(host name). Answer: DESKTOP-L8C5GSJ
 
 sources:
 https://malware-traffic-analysis.net/2025/01/22/index.html
