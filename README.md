@@ -63,6 +63,12 @@ I found the host ip(victim ip) by taking the ip address under the source column 
 I found the MAC address by going into the packet details of one of the http request packet, exploding the Ethernet section, and finding the HEX value of the source. Answer: 00:d0:b7:26:4a:74
 ### Q3) **What is the hostname of the infected Windows client?**  
 I found the hostname by first filtering to only dhcp requests, then exploding option 12 of the packet details(host name). Answer: DESKTOP-L8C5GSJ
+### Q4) **What is the user account name on the infected Windows client?** 
+I found the user account name by using the Kerberos query: kerberos.CNameString. From that, I was able to filter for kerberos activities (windows authentication protocol) and found the account under the cname field: shutchenson.
+### Q5) **What is the likely domain name associated with the fake page?** 
+
+
+
 
 sources:
 https://malware-traffic-analysis.net/2025/01/22/index.html
