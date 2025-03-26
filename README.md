@@ -77,6 +77,8 @@ I found the MAC address by going into the packet details of one of the http requ
 I found the hostname by first filtering to only dhcp requests, then exploding option 12 of the packet details(host name). Answer: DESKTOP-L8C5GSJ
 ### Q4) **What is the user account name on the infected Windows client?** 
 I found the user account name by using the Kerberos query: kerberos.CNameString. From that, I was able to filter for kerberos activities (windows authentication protocol) and found the account under the cname field: shutchenson.
+![image](https://github.com/user-attachments/assets/ab7e6f8b-e719-4bc0-9206-63763a6fc099)
+
 ### Q5) **What is the likely domain name associated with the fake page?** 
 I investigated the pcap file by first filtering http get requests. I followed the tcp stream of a request that received a powershell script. From there, I found all information available about how the attack happened. What I noticed is that the only information available about the host is the following ip address: 5.252.153.41
 ### Q6) **What are the command-and-control (C2) server IP addresses used in this infection?**
