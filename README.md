@@ -71,6 +71,8 @@ To analyze the file securely, it is recommended to transfer it to a **virtual ma
 
 ### Q1)  **What is the IP address of the infected Windows client?**  
 I found the host ip(victim ip) by taking the ip address under the source column for the http requests. Answer: 10.1.17.215
+![image](https://github.com/user-attachments/assets/3f066b17-faa8-4425-b5be-d2f458633b23)
+
 ### Q2) **What is the MAC address of the infected Windows client?**  
 I found the MAC address by going into the packet details of one of the http request packet, exploding the Ethernet section, and finding the HEX value of the source. Answer: 00:d0:b7:26:4a:74
 ### Q3) **What is the hostname of the infected Windows client?**  
