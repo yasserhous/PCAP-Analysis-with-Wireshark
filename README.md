@@ -6,6 +6,14 @@ This lab focuses on analyzing network traffic to identify indicators of infectio
 The specific exercise being analyzed can be found here:  
 [Malware Traffic Analysis Exercise - January 22, 2025](https://malware-traffic-analysis.net/2025/01/22/index.html).
 
+The purpose of this lab is educational. The aim is to gain hands-on experience on the investigative steps required to find indicators of compromise(IOC's), while tackeling relevant threats in 2025. 
+
+In this lab, the tools used are:
+1. Host-only Linux VM
+2. Wireshark
+3. Chat GPT
+
+
 ## **Scenario**
 As a **Security Operations Center (SOC) analyst**, you receive a report from a user who claims that a coworker has downloaded a suspicious file after searching for **Google Authenticator**. The caller provides supporting details that align with reports shared on social media:
 
