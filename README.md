@@ -6,12 +6,16 @@ This lab focuses on analyzing network traffic to identify indicators of infectio
 The specific exercise being analyzed can be found here:  
 [Malware Traffic Analysis Exercise - January 22, 2025](https://malware-traffic-analysis.net/2025/01/22/index.html).
 
-The purpose of this lab is educational. The aim is to gain hands-on experience on the investigative steps required to find indicators of compromise(IOC's), while tackeling relevant threats in 2025. 
+The purpose of this lab is educational. The aim is to gain hands-on experience with the investigative steps required to identify indicators of compromise (IOCs) in a network capture, while addressing realistic threats relevant to 2025.
 
-In this lab, the tools used are:
-1. Host-only Linux VM
-2. Wireshark
-3. Chat GPT
+In this lab, I simulate a network infection scenario involving a fake Microsoft Teams advertisement delivering a malicious PowerShell script. The analysis focuses on identifying the infected host, C2 server, and malicious payload delivery mechanisms using Wireshark.
+
+Tools Used:
+Host-only Linux VM (Kali-based)
+
+Wireshark (for PCAP analysis)
+
+ChatGPT (used to assist in deobfuscating scripts, decoding payloads, and interpreting attack logic)
 
 
 ## **Scenario**
