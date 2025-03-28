@@ -94,6 +94,7 @@ Using AI, I decoded the ps1 file found in the objects of the pcap, and found tha
 
 ### Finding and decoding the malicious powershell script
 When looking to find the malicious powershell script that was connecting to the C2 server, I found a powershell script in the list of objects on the PCAP file
+
 ![image](https://github.com/user-attachments/assets/b364d061-7b4b-47ca-a83d-0981d9778004)
 
 When I opened the script, I found that it does not look like code, but rather a cypher. I used AI to understand how to decode the cypher. I understood that the cypher contained characters to obfuscate(these can be found from the first and last line of the ps1 file). I also understood that the remainder of the code is in base-64 encoding.
