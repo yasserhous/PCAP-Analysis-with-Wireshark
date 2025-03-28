@@ -1,5 +1,6 @@
 # **Wireshark Malware Traffic Analysis Lab**
-
+## 📜 Words of Wisdom  
+> *This project is for educational purposes, only. It is not to be used with ill intent*  
 ## **Overview**
 This lab focuses on the analysis of network traffic to identify indicators of infection on a Windows client using Wireshark. The analysis leverages a packet capture (PCAP) file sourced from Malware Traffic Analysis, reflecting a realistic malware investigation scenario. Throughout the exercise, we examine network traffic, extract pertinent artifacts, and systematically address essential incident response questions.
 
