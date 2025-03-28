@@ -8,7 +8,7 @@ The specific exercise being analyzed can be found here:
 
 The purpose of this lab is educational. The aim is to gain hands-on experience with the investigative steps required to identify indicators of compromise (IOCs) in a network capture, while addressing realistic threats relevant to 2025.
 
-In this lab, I simulate a network infection scenario involving a fake Microsoft Teams advertisement delivering a malicious PowerShell script. The analysis focuses on identifying the infected host, C2 server, and malicious payload delivery mechanisms using Wireshark.
+In this lab, I simulate a network infection scenario involving a fake Microsoft Teams advertisement delivering a malicious PowerShell script. The analysis focuses on identifying the infected host, C2 server, and malicious payload delivery mechanisms using Wireshark. Because the pcap available on the website does not contain the activities necessary to identify question 5 and 6 from the http requests, this lead to an interesting activity to dig deeper into the malicious payload downloaded. I was able to interpret the script and de-obfuscate the base-64 encoding 
 
 Tools Used:
 Host-only Linux VM (Kali-based)
